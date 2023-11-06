@@ -1,12 +1,12 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
+#extend("master"):
+#export("body"):
 
-  <title>#(title)</title>
-</head>
+    <h1>Harry Potter House Scores</h1>
+    <div class="container-fluid" hx-sse="connect:/house-events">
+        #for(house in houses):
+            #extend("house")
+        #endfor
+    </div>
 
-<body>
-  <h1>#(title)</h1>
-</body>
-</html>
+#endexport
+#endextend
