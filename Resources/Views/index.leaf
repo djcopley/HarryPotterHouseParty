@@ -1,12 +1,12 @@
 #extend("master"):
-#export("body"):
-
-    <h1>Harry Potter House Scores</h1>
-    <div class="container-fluid" hx-sse="connect:/house-events">
-        #for(house in houses):
-            #extend("house")
-        #endfor
-    </div>
-
-#endexport
+    #export("body"):
+        <h1>Harry Potter House Scores</h1>
+        <div class="container-fluid" hx-sse="connect:/house-events">
+            #for(house in houses):
+                <div class="house-quadrant" id="#(house.name)-score" hx-trigger="sse:scores_updated" hx-get="/house/#(house.name)">
+                    #extend("house")
+                </div>
+            #endfor
+        </div>
+    #endexport
 #endextend
