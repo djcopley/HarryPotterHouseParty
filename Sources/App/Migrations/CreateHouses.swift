@@ -7,13 +7,14 @@ struct CreateHouses: AsyncMigration {
             .field("name", .string, .required)
             .field("score", .int, .required)
             .field("display_index", .int, .required)
+            .unique(on: "name")
             .create()
 
         let houses = [
-            House(name: "gryffindor", displayIndex: 0),
-            House(name: "hufflepuff", displayIndex: 1),
-            House(name: "ravenclaw", displayIndex: 2),
-            House(name: "slytherin", displayIndex: 3)
+            House(name: "gryffindor"),
+            House(name: "hufflepuff"),
+            House(name: "ravenclaw"),
+            House(name: "slytherin")
         ]
         for house in houses { try await house.create(on: database) }
     }

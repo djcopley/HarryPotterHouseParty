@@ -3,23 +3,45 @@ import Vapor
 
 struct ApiController: RouteCollection {
     func boot(routes: RoutesBuilder) throws {
-        let api = routes
-            .grouped("api")
-            .grouped(User.credentialsAuthenticator())
+        let api = routes.grouped("api")
 
-        api.get("login") { req async throws -> View in
-            try await req.view.render("login")
+        let houses = api.grouped("houses")
+        houses.get(use: getHouses)
+        houses.group(":name") { house in
+            house.get(use: getHouse)
+            house.patch(use: patchHouse)
         }
-
-        api.post("login") { req async throws -> HTTPStatus in
-            print(req.auth)
-            return .accepted
-        }
-
-        api.get(use: index)
     }
 
-    func index(req: Request) async -> HTTPStatus {
-        return .notImplemented
+    func getHouses(req: Request) async throws -> [House] {
+        try await House.query(on: req.db).all()
     }
+
+    func getHouse(req: Request) async throws -> House {
+        guard let houseName = req.parameters.get("name") else {
+            throw Abort(.badRequest)
+        }
+        guard let house = try await House.find(name: houseName, on: req.db) else {
+            throw Abort(.notFound)
+        }
+        return house
+    }
+
+    func patchHouse(req: Request) async throws -> House {
+        guard let houseName = req.parameters.get("name") else {
+            throw Abort(.badRequest)
+        }
+        guard let house = try await House.find(name: houseName, on: req.db) else {
+            throw Abort(.notFound)
+        }
+        let patchScore = try req.content.decode(PatchHouse.self)
+        house.score = patchScore.score 
+        try await house.update(on: req.db)
+        return house
+    }
+}
+
+// Structure of PATCH /api/houses/:name request.
+fileprivate struct PatchHouse: Content {
+    var score: Int
 }

@@ -14,12 +14,27 @@ final class User: Model, Content {
     @Field(key: "password_hash")
     var passwordHash: String
 
+    @Parent(key: "house_id")
+    var house: House
+
+    @Enum(key: "role")
+    var role: Role
+
     init() { }
 
-    init(id: UUID? = nil, username: String, passwordHash: String) {
+    init(id: UUID? = nil, username: String, passwordHash: String, house: House, role: Role = .student) {
         self.id = id
         self.username = username 
         self.passwordHash = passwordHash
+        self.house = house
+        self.role = role
+    }
+
+    enum Role: String, Codable {
+        case headMaster = "Headmaster"
+        case headOfHouse = "Head of House"
+        case prefect = "Prefect"
+        case student = "Student"
     }
 }
 

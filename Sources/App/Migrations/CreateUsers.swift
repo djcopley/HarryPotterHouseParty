@@ -9,8 +9,8 @@ struct CreateUsers: AsyncMigration {
             .field("password_hash", .string, .required)
             .create()
 
-        let admin = User(username: "admin", passwordHash: try Bcrypt.hash("admin"))
-        try await admin.create(on: database)
+        // let admin = User(username: "admin", passwordHash: try Bcrypt.hash("admin"))
+        // try await admin.create(on: database)
     }
 
     func revert(on database: Database) async throws {

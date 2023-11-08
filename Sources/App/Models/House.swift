@@ -14,15 +14,20 @@ final class House: Model, Content {
     @Field(key: "score")
     var score: Int
 
-    @Field(key: "display_index")
-    var displayIndex: Int
+    @Children(for: \.$house)
+    var users: [User]
 
     init() { }
 
-    init(id: UUID? = nil, name: String, displayIndex: Int, score: Int = 0) {
+    init(id: UUID? = nil, name: String, score: Int = 0) {
         self.id = id
         self.name = name 
-        self.displayIndex = displayIndex
         self.score = score
+    }
+}
+
+extension House {
+    static func find(name: String, on database: Database) async throws -> House? {
+        try await House.query(on: database).filter(\.$name == name).first()
     }
 }
