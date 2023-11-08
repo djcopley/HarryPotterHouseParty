@@ -15,6 +15,8 @@ let package = Package(
         .package(url: "https://github.com/vapor/fluent-postgres-driver.git", from: "2.7.2"),
         // 🍃 An expressive, performant, and extensible templating language built for Swift.
         .package(url: "https://github.com/vapor/leaf.git", from: "4.2.4"),
+        // 🚘 A performant, key-value storage system.
+        .package(url: "https://github.com/vapor/redis.git", from: "4.0.0"),
     ],
     targets: [
         .executableTarget(
@@ -24,6 +26,7 @@ let package = Package(
                 .product(name: "FluentPostgresDriver", package: "fluent-postgres-driver"),
                 .product(name: "Leaf", package: "leaf"),
                 .product(name: "Vapor", package: "vapor"),
+                .product(name: "Redis", package: "redis"),
             ]
         ),
         .testTarget(name: "AppTests", dependencies: [
@@ -35,6 +38,7 @@ let package = Package(
             .product(name: "Fluent", package: "Fluent"),
             .product(name: "FluentPostgresDriver", package: "fluent-postgres-driver"),
             .product(name: "Leaf", package: "leaf"),
+            .product(name: "Redis", package: "redis"),
         ])
     ]
 )
