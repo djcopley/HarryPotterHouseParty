@@ -1,0 +1,45 @@
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">
+      <img src="/images/hedwig.png" width="30" height="30" class="d-inline-block align-top" alt="Hedwig">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <i class="fas fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" href="/">Scores</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav d-flex flex-row ms-auto me-3">
+        #if(user.loggedIn):
+          <li class="nav-item me-3 me-lg-0 dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              <img src="/images/dumbledore.jpeg" class="rounded-circle" height="30"
+                alt="" loading="lazy" />
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown1">
+              <li><a class="dropdown-item" href="/settings">Settings</a></li>
+              <li>
+                <hr class="dropdown-divider" />
+              </li>
+              <li>
+                <a class="dropdown-item" href="/logout">Signout</a>
+              </li>
+            </ul>
+          </li>
+        #else:
+          <li class="nav-item">
+            <a class="nav-link" href="/login">Sign in</a>
+          </li>
+        #endif
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- Navbar -->

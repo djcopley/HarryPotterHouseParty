@@ -8,16 +8,8 @@ func routes(_ app: Application) throws {
             .query(on: req.db)
             .all()
             .sorted { houseOrder.firstIndex(of: $0.name)! < houseOrder.firstIndex(of: $1.name)! }
-        return try await req.view.render("index", IndexTemplateData(houses: houses, user: .init(loggedIn: true)))
-    }
-
-    app.get("login") { req async throws -> View in
-        try await req.view.render("login")
-    }
-
-    app.post("login") { req async throws -> HTTPStatus in
-        print(req.auth)
-        return .accepted
+        let loggedIn = req.auth.has(User.self)
+        return try await req.view.render("index", IndexTemplateData(houses: houses, user: .init(loggedIn: loggedIn)))
     }
 
     app.get("house-events") { req in
@@ -29,6 +21,7 @@ func routes(_ app: Application) throws {
 
     try app.register(collection: HouseController())
     try app.register(collection: ApiController())
+    try app.register(collection: LoginController())
 }
 
 fileprivate struct IndexTemplateData: Codable {

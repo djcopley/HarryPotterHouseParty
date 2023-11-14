@@ -1,7 +1,6 @@
 #extend("master"):
     #export("body"):
-        <h1>Harry Potter House Scores</h1>
-        <div class="container-fluid" hx-sse="connect:/house-events">
+        <div class="container-fluid main-content" hx-sse="connect:/house-events">
             #for(house in houses):
                 <div class="house-quadrant">
                     <img src="/images/#(house.name)-icon.png" alt="#capitalized(house.name)" class="house-image">

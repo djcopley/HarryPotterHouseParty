@@ -3,13 +3,15 @@ import Vapor
 
 struct ApiController: RouteCollection {
     func boot(routes: RoutesBuilder) throws {
-        let api = routes.grouped("api")
+        let api = routes
+            .grouped("api")
+            .grouped(User.guardMiddleware())
 
         let houses = api.grouped("houses")
         houses.get(use: getHouses)
         houses.group(":name") { house in
             house.get(use: getHouse)
-            house.patch(use: patchHouse)
+            house.patch(use: updateHouseScore)
         }
     }
 
@@ -27,7 +29,7 @@ struct ApiController: RouteCollection {
         return house
     }
 
-    func patchHouse(req: Request) async throws -> House {
+    func updateHouseScore(req: Request) async throws -> House {
         guard let houseName = req.parameters.get("name") else {
             throw Abort(.badRequest)
         }

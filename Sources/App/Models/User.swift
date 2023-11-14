@@ -1,7 +1,6 @@
 import Fluent
 import Vapor
 
-/// Harry Potter House
 final class User: Model, Content {
     static let schema = "users"
 
@@ -14,29 +13,48 @@ final class User: Model, Content {
     @Field(key: "password_hash")
     var passwordHash: String
 
-    @Parent(key: "house_id")
-    var house: House
+    // @Parent(key: "house_id")
+    // var house: House
 
-    @Enum(key: "role")
-    var role: Role
+    // @Enum(key: "role")
+    // var role: Role
 
     init() { }
 
-    init(id: UUID? = nil, username: String, passwordHash: String, house: House, role: Role = .student) {
+    init(id: UUID? = nil, username: String, passwordHash: String) {
+    // , house: House, role: Role = .student) {
         self.id = id
         self.username = username 
         self.passwordHash = passwordHash
-        self.house = house
-        self.role = role
+        // self.house = house
+        // self.role = role
     }
 
+    /// Enum describing the user permissions within the system.
     enum Role: String, Codable {
-        case headMaster = "Headmaster"
+        /// Users with this role have complete access to all houses.
+        case headmaster = "Headmaster"
+
+        /// Users with this role have permission to alter the score of their own house and approve
+        /// student score request changes.
         case headOfHouse = "Head of House"
+
+        /// Users with this role have permission to alter their own house score.
         case prefect = "Prefect"
+
+        /// Users with this role have permission to submit a score change request to be reviewed and
+        /// approved by the `Head of House` or `Headmaster`.
         case student = "Student"
     }
 }
+
+extension User {
+    static func find(username: String, on database: Database) async throws -> User? {
+        try await User.query(on: database).filter(\.$username == username).first()
+    }
+}
+
+extension User: ModelSessionAuthenticatable { }
 
 extension User: ModelCredentialsAuthenticatable {
     static let usernameKey = \User.$username

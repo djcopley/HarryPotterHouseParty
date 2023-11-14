@@ -1,5 +1,5 @@
 /* Custom styles for the house quadrants */
-.container-fluid {
+.main-content {
     display: grid;
     grid-template-columns: 1fr 1fr; /* Responsive grid columns */
     gap: 40px; /* Gap between grid items */
@@ -22,18 +22,18 @@
     align-items: center;
 }
 
-.house-quadrant:hover {
+/* .house-quadrant:hover {
     transform: scale(1.05);
-}
+} */
 
 .house-image {
     max-width: 100px;
     transition: transform 0.2s;
 }
 
-.house-image:hover {
+/* .house-image:hover {
     transform: scale(1.1);
-}
+} */
 
 .score-button {
     width: 50px;

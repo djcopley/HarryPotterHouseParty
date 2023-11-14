@@ -7,10 +7,12 @@ struct CreateUsers: AsyncMigration {
             .id()
             .field("username", .string, .required)
             .field("password_hash", .string, .required)
+            .unique(on: "username", name: "no_duplicate_usernames")
             .create()
 
-        // let admin = User(username: "admin", passwordHash: try Bcrypt.hash("admin"))
-        // try await admin.create(on: database)
+        // TODO: Update migration to match model
+        let admin = User(username: "admin", passwordHash: try Bcrypt.hash("admin"))
+        try await admin.create(on: database)
     }
 
     func revert(on database: Database) async throws {

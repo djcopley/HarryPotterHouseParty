@@ -3,9 +3,12 @@ import Vapor
 
 struct HouseController: RouteCollection {
     func boot(routes: RoutesBuilder) throws {
-        let house = routes.grouped("house")
-        house.get(":name", use: getHouse)
-        house.patch(":name", use: updateHouse)
+        let houses = routes.grouped("house")
+
+        houses.group(":name") { house in
+            house.get(use: getHouse)
+            house.patch(use: incrementHouseScore)
+        }
     }
 
     func getHouse(req: Request) async throws -> View {
@@ -18,14 +21,14 @@ struct HouseController: RouteCollection {
         return try await req.view.render("score", ScoreTemplateData(house: house))
     }
 
-    func updateHouse(req: Request) async throws -> Response {
+    func incrementHouseScore(req: Request) async throws -> Response {
         guard let name = req.parameters.get("name") else {
             throw Abort(.badRequest, reason: "parameter 'name' required")
         }
         guard let house = try await House.find(name: name, on: req.db) else {
             throw Abort(.notFound, reason: "house '\(name)' not found")
         }
-        let incrementBy = try req.content.decode(PatchHouse.self).incrementBy
+        let incrementBy = try req.content.decode(IncrementHouseScoreRequest.self).incrementBy
         house.score += incrementBy
         try await house.update(on: req.db)
         try await SSEController.handler.sendEvent()
@@ -38,6 +41,6 @@ fileprivate struct ScoreTemplateData: Codable {
 }
 
 // Structure of PATCH /houses/:name request.
-fileprivate struct PatchHouse: Content {
+fileprivate struct IncrementHouseScoreRequest: Content {
     var incrementBy: Int
 }

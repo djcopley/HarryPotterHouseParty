@@ -9,6 +9,11 @@ public func configure(_ app: Application) async throws {
     // MARK - Middleware
     app.middleware.use(FileMiddleware(publicDirectory: app.directory.publicDirectory))
 
+    app.sessions.configuration.cookieName = "hphp-session"
+    app.sessions.use(.redis)
+    app.middleware.use(app.sessions.middleware)
+    app.middleware.use(User.sessionAuthenticator())
+
     // let corsConfiguration = CORSMiddleware.Configuration(
     //     allowedOrigin: .all,
     //     allowedMethods: [.GET, .POST, .PUT, .OPTIONS, .DELETE, .PATCH],

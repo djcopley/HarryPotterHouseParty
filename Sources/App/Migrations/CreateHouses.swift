@@ -6,8 +6,7 @@ struct CreateHouses: AsyncMigration {
             .id()
             .field("name", .string, .required)
             .field("score", .int, .required)
-            .field("display_index", .int, .required)
-            .unique(on: "name")
+            .unique(on: "name", name: "no_duplicate_houses")
             .create()
 
         let houses = [

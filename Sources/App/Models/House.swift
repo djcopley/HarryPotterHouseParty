@@ -1,7 +1,6 @@
 import Fluent
 import Vapor
 
-/// Harry Potter House
 final class House: Model, Content {
     static let schema = "houses"
 
@@ -14,8 +13,8 @@ final class House: Model, Content {
     @Field(key: "score")
     var score: Int
 
-    @Children(for: \.$house)
-    var users: [User]
+    // @Children(for: \.$house)
+    // var users: [User]
 
     init() { }
 
