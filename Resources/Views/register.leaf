@@ -11,9 +11,8 @@
             background-repeat: no-repeat;
             background-size: cover;"></div>
 
-
         <!-- Background image -->
-        <div class="card mx-4 mx-md-5 shadow-5-strong" style="
+        <div class="card rounded-4 mx-4 mx-md-5 shadow-5-strong" style="
                 margin-top: -100px;
                 background: hsla(0, 0%, 100%, 0.8);
                 backdrop-filter: blur(30px);
@@ -22,32 +21,33 @@
 
             <div class="row d-flex justify-content-center">
                 <div class="col-lg-8">
-                <h2 class="fw-bold mb-5">Log In</h2>
+                <h2 class="fw-bold mb-5"></h2>
                 <form method="post">
                     <!-- Username input -->
                     <div class="form-outline mb-4">
                     <input autocomplete="username" type="text" id="username" name="username" class="form-control" />
                     <label class="form-label" for="username">Username</label>
-                    <div class="invalid-feedback">
-                        Please choose a username.
-                    </div>
                     </div>
 
                     <!-- Password input -->
                     <div class="form-outline mb-4">
-                    <input autocomplete="current-password" type="password" id="password" name="password" class="form-control" />
-                    <label class="form-label" for="password">Password</label>
-                    <div class="invalid-feedback">Please choose a username.</div>                      
+                    <input autocomplete="new-password" type="password" id="newPassword" name="newPassword" class="form-control" />
+                    <label class="form-label" for="newPassword">Enter Password</label>
+                    </div>
+
+                    <div class="form-outline mb-4">
+                    <input autocomplete="new-password" type="password" id="confirmPassword" name="confirmPassword" class="form-control" />
+                    <label class="form-label" for="confirmPassword">Confirm Password</label>
                     </div>
 
                     <!-- Submit button -->
                     <button type="submit" class="btn btn-primary btn-block mb-4">
-                    Log In
+                    Enroll
                     </button>
 
                     <!-- Register buttons -->
                     <div class="text-center">
-                        <p>Not a wizard? <a href="/register">Enroll</a></p>
+                        <p>Already a wizard? <a href="/login">Log In</a></p>
                     </div>
                     </div>
                 </form>
@@ -59,3 +59,4 @@
         <!-- Section: Design Block -->
     #endexport
 #endextend
+

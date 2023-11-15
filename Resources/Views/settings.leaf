@@ -1,0 +1,66 @@
+#extend("master"):
+    #export("body"):
+        <div class="container mt-5">
+            <h2>Account Settings</h2>
+
+            <!-- Personal Information Section -->
+            <div class="card mb-4">
+                <div class="card-header">Personal Information</div>
+                <div class="card-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input autocomplete="username" placeholder="#(user.username)" type="text" class="form-control"
+                             id="username" name="username">
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Update Information</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Password Change Section -->
+            <div class="card mb-4">
+                <div class="card-header">Change Password</div>
+                <div class="card-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="currentPassword" class="form-label">Current Password</label>
+                            <input autocomplete="current-password" type="password" class="form-control" id="currentPassword">
+                        </div>
+                        <div class="mb-3">
+                            <label for="newPassword" class="form-label">New Password</label>
+                            <input autocomplete="new-password" type="password" class="form-control" id="newPassword">
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirmPassword" class="form-label">Confirm New Password</label>
+                            <input autocomplete="new-password" type="password" class="form-control" id="confirmPassword">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Change Password</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Notification Settings Section -->
+            <div class="card">
+                <div class="card-header">Notification Settings</div>
+                <div class="card-body">
+                    <form>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="emailNotifications">
+                            <label class="form-check-label" for="emailNotifications">Email Notifications</label>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="smsNotifications">
+                            <label class="form-check-label" for="smsNotifications">SMS Notifications</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save Settings</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    #endexport
+#endextend

@@ -1,4 +1,3 @@
-<!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
     <a class="navbar-brand" href="/">
@@ -20,8 +19,7 @@
           <li class="nav-item me-3 me-lg-0 dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-bs-toggle="dropdown"
               aria-expanded="false">
-              <img src="/images/dumbledore.jpeg" class="rounded-circle" height="30"
-                alt="" loading="lazy" />
+              <img src="/images/dumbledore.jpeg" class="rounded-circle" height="25" alt="Profile Pic" loading="lazy" />
             </a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown1">
               <li><a class="dropdown-item" href="/settings">Settings</a></li>
@@ -42,4 +40,3 @@
     </div>
   </div>
 </nav>
-<!-- Navbar -->
