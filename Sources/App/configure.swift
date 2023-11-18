@@ -14,14 +14,14 @@ public func configure(_ app: Application) async throws {
     app.middleware.use(app.sessions.middleware)
     app.middleware.use(User.sessionAuthenticator())
 
-    // let corsConfiguration = CORSMiddleware.Configuration(
-    //     allowedOrigin: .all,
-    //     allowedMethods: [.GET, .POST, .PUT, .OPTIONS, .DELETE, .PATCH],
-    //     allowedHeaders: [.accept, .authorization, .contentType, .origin, .xRequestedWith, .userAgent, .accessControlAllowOrigin]
-    // )
-    // let cors = CORSMiddleware(configuration: corsConfiguration)
-    // // cors middleware should come before default error middleware using `at: .beginning`
-    // app.middleware.use(cors, at: .beginning)
+    let corsConfiguration = CORSMiddleware.Configuration(
+        allowedOrigin: .all,
+        allowedMethods: [.GET, .POST, .PUT, .OPTIONS, .DELETE, .PATCH],
+        allowedHeaders: [.accept, .authorization, .contentType, .origin, .xRequestedWith, .userAgent, .accessControlAllowOrigin]
+    )
+    let cors = CORSMiddleware(configuration: corsConfiguration)
+    // cors middleware should come before default error middleware using `at: .beginning`
+    app.middleware.use(cors, at: .beginning)
 
     // MARK - Database
     app.databases.use(DatabaseConfigurationFactory.postgres(configuration: .init(
@@ -33,8 +33,10 @@ public func configure(_ app: Application) async throws {
         tls: .prefer(try .init(configuration: .clientDefault)))
     ), as: .psql)
 
+    app.migrations.add(CreateHousesSchema())
     app.migrations.add(CreateHouses())
-    app.migrations.add(CreateUsers())
+    app.migrations.add(CreateUsersSchema())
+    app.migrations.add(CreateDumbledore())
 
     // MARK - Redis
     app.redis.configuration = try RedisConfiguration(hostname: "localhost")

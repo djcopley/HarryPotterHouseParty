@@ -1,24 +1,13 @@
 import Fluent
 
 struct CreateHouses: AsyncMigration {
-    func prepare(on database: Database) async throws {
-        try await database.schema("houses")
-            .id()
-            .field("name", .string, .required)
-            .field("score", .int, .required)
-            .unique(on: "name", name: "no_duplicate_houses")
-            .create()
+    let houses = ["gryffindor", "hufflepuff", "ravenclaw", "slytherin"]
 
-        let houses = [
-            House(name: "gryffindor"),
-            House(name: "hufflepuff"),
-            House(name: "ravenclaw"),
-            House(name: "slytherin")
-        ]
-        for house in houses { try await house.create(on: database) }
+    func prepare(on database: Database) async throws {
+        for house in houses { try await House(name: house).create(on: database) }
     }
 
     func revert(on database: Database) async throws {
-        try await database.schema("houses").delete()
+        for house in houses { try await House.find(name: house, on: database)!.delete(on: database) }
     }
 }

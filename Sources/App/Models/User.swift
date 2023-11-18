@@ -7,44 +7,49 @@ final class User: Model, Content {
     @ID(key: .id)
     var id: UUID?
 
+    @Timestamp(key: "created_at", on: .create)
+    var createdAt: Date?
+
+    @Timestamp(key: "updated_at", on: .update)
+    var updatedAt: Date?
+
     @Field(key: "username")
     var username: String
 
     @Field(key: "password_hash")
     var passwordHash: String
 
-    // @Parent(key: "house_id")
-    // var house: House
+    @Parent(key: "house_id")
+    var house: House
 
-    // @Enum(key: "role")
-    // var role: Role
+    @Enum(key: "role")
+    var role: Role
 
     init() { }
 
-    init(id: UUID? = nil, username: String, passwordHash: String) {
-    // , house: House, role: Role = .student) {
+    init(id: UUID? = nil, username: String, passwordHash: String, houseID: House.IDValue, role: Role = .student) {
         self.id = id
         self.username = username 
         self.passwordHash = passwordHash
-        // self.house = house
-        // self.role = role
+        self.$house.id = houseID
+        self.role = role
     }
 
     /// Enum describing the user permissions within the system.
     enum Role: String, Codable {
         /// Users with this role have complete access to all houses.
-        case headmaster = "Headmaster"
+        case headmaster
 
         /// Users with this role have permission to alter the score of their own house and approve
         /// student score request changes.
-        case headOfHouse = "Head of House"
+        case headOfHouse
 
         /// Users with this role have permission to alter their own house score.
-        case prefect = "Prefect"
+        case prefect
 
         /// Users with this role have permission to submit a score change request to be reviewed and
         /// approved by the `Head of House` or `Headmaster`.
-        case student = "Student"
+        case student
     }
 }
 
@@ -62,5 +67,16 @@ extension User: ModelCredentialsAuthenticatable {
 
     func verify(password: String) throws -> Bool {
         try Bcrypt.verify(password, created: self.passwordHash)
+    }
+}
+
+extension User.Role {
+    var displayName: String {
+        switch self {
+        case .headmaster: "Headmaster"
+        case .headOfHouse: "Head of House"
+        case .prefect: "Prefect"
+        case .student: "Student"
+        }
     }
 }

@@ -4,8 +4,9 @@ import Vapor
 struct ApiController: RouteCollection {
     func boot(routes: RoutesBuilder) throws {
         let api = routes
-            .grouped("api")
+            .grouped(APIKeyAuthenticator())
             .grouped(User.guardMiddleware())
+            .grouped("api")
 
         let houses = api.grouped("houses")
         houses.get(use: getHouses)

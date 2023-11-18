@@ -13,8 +13,8 @@ final class House: Model, Content {
     @Field(key: "score")
     var score: Int
 
-    // @Children(for: \.$house)
-    // var users: [User]
+    @Children(for: \.$house)
+    var users: [User]
 
     init() { }
 

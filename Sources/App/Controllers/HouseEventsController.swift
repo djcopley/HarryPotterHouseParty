@@ -1,5 +1,20 @@
 import Vapor
 
+struct HouseEventsController: RouteCollection {
+    func boot(routes: RoutesBuilder) {
+        routes.get("house-events", use: subscribe)
+    }
+
+    func subscribe(req: Request) async throws -> Response {
+        let response = Response()
+        response.headers.add(name: .contentType, value: "text/event-stream")
+        response.body = Response.Body(stream: { SSEController.controller.addClient(writer: $0)} )
+        return response
+    }
+}
+
+// MARK - Poor Mans Server-Sent-Events 🥴
+
 class SSEController {
     private var clientWriters: [BodyStreamWriter] = []
 
@@ -15,7 +30,7 @@ class SSEController {
         }
     }
 
-    static let handler = SSEController()
+    static let controller = SSEController()
 }
 
 extension BodyStreamWriter {

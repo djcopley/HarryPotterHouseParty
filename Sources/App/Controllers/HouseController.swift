@@ -31,7 +31,7 @@ struct HouseController: RouteCollection {
         let incrementBy = try req.content.decode(IncrementHouseScoreRequest.self).incrementBy
         house.score += incrementBy
         try await house.update(on: req.db)
-        try await SSEController.handler.sendEvent()
+        try await SSEController.controller.sendEvent()
         return Response(status: .ok)
     }
 }
