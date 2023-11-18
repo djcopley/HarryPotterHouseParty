@@ -11,12 +11,8 @@
             background-repeat: no-repeat;
             background-size: cover;"></div>
 
-        <!-- Background image -->
-        <div class="card rounded-4 mx-4 mx-md-5 shadow-5-strong" style="
-                margin-top: -100px;
-                background: hsla(0, 0%, 100%, 0.8);
-                backdrop-filter: blur(30px);
-                ">
+        <!-- Register Card -->
+        <div class="card rounded-4 mx-4 mx-md-5 shadow-5-strong frosted-glass">
             <div class="card-body py-5 px-md-5">
 
             <div class="row d-flex justify-content-center">

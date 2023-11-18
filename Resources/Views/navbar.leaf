@@ -13,13 +13,24 @@
         <li class="nav-item">
           <a class="nav-link" href="/">Scores</a>
         </li>
+
+        #if(user):
+        <li class="nav-item">
+          <a class="nav-link" href="/">Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/">Manage Users</a>
+        </li>
+        #endif
+
+
       </ul>
       <ul class="navbar-nav d-flex flex-row ms-auto me-3">
-        #if(user.loggedIn):
+        #if(user):
           <li class="nav-item me-3 me-lg-0 dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-bs-toggle="dropdown"
               aria-expanded="false">
-              <img src="/images/dumbledore.jpeg" class="rounded-circle" height="25" alt="Profile Pic" loading="lazy" />
+              <img src="#(user.profilePicture)" class="rounded-circle" height="25" alt="Profile Pic" loading="lazy" />
             </a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown1">
               <li><a class="dropdown-item" href="/settings">Settings</a></li>
@@ -27,7 +38,9 @@
                 <hr class="dropdown-divider" />
               </li>
               <li>
-                <a class="dropdown-item" href="/logout">Signout</a>
+                <form action="/logout" method="post">
+                  <input class="dropdown-item" type="submit" name="loguout" value="Log Out" />
+                </form>
               </li>
             </ul>
           </li>

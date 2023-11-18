@@ -11,13 +11,8 @@
             background-repeat: no-repeat;
             background-size: cover;"></div>
 
-
-        <!-- Background image -->
-        <div class="card mx-4 mx-md-5 shadow-5-strong" style="
-                margin-top: -100px;
-                background: hsla(0, 0%, 100%, 0.8);
-                backdrop-filter: blur(30px);
-                ">
+        <!-- Login Card -->
+        <div class="card mx-4 mx-md-5 shadow-5-strong frosted-glass">
             <div class="card-body py-5 px-md-5">
 
             <div class="row d-flex justify-content-center">
@@ -26,19 +21,25 @@
                 <form method="post">
                     <!-- Username input -->
                     <div class="form-outline mb-4">
-                    <input autocomplete="username" type="text" id="username" name="username" class="form-control" />
+                    <input autocomplete="username" type="text" id="username" name="username" class="form-control
+                    #if(failed):is-invalid#endif
+                    " />
                     <label class="form-label" for="username">Username</label>
-                    <div class="invalid-feedback">
-                        Please choose a username.
-                    </div>
                     </div>
 
                     <!-- Password input -->
                     <div class="form-outline mb-4">
-                    <input autocomplete="current-password" type="password" id="password" name="password" class="form-control" />
+                    <input autocomplete="current-password" type="password" id="password" name="password" class="form-control
+                    #if(failed):is-invalid#endif
+                    " />
                     <label class="form-label" for="password">Password</label>
-                    <div class="invalid-feedback">Please choose a username.</div>                      
                     </div>
+
+                    #if(failed):
+                    <div class="text-center">
+                        <p class="text-danger">Incorrect username or password. Try again.</p>
+                    </div>
+                    #endif
 
                     <!-- Submit button -->
                     <button type="submit" class="btn btn-primary btn-block mb-4">

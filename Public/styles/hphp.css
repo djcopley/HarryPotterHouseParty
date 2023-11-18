@@ -65,3 +65,10 @@ h2 {
         grid-template-columns: 1fr; /* Switch to one column for smaller screens */
     }
 }
+
+.frosted-glass {
+    margin-top: -100px;
+    background: hsla(0, 0%, 100%, 0.8);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px)
+}

@@ -8,7 +8,7 @@
                     <div hx-trigger="sse:scores_updated" hx-get="/house/#(house.name)">
                         #extend("score")
                     </div>
-                    #if(user.loggedIn):
+                    #if(user):
                         <p class="d-inline-flex gap-1">
                             <button class="btn btn-primary score-button" hx-patch="/house/#(house.name)" hx-swap="none"
                                     hx-vals='{"incrementBy": -1}'>-</button>
