@@ -11,11 +11,12 @@ volumes:
 
 x-shared_environment: &shared_environment
   LOG_LEVEL: ${LOG_LEVEL:-debug}
+  REDIS_HOST: redis
   DATABASE_HOST: db
   DATABASE_NAME: vapor_database
   DATABASE_USERNAME: vapor_username
   DATABASE_PASSWORD: vapor_password
-  
+
 services:
   app:
     image: harry-potter-house-party:latest
@@ -48,7 +49,7 @@ services:
     deploy:
       replicas: 0
   db:
-    image: postgres:16-alpine
+    image: postgres:latest
     volumes:
       - db_data:/var/lib/postgresql/data/pgdata
     environment:

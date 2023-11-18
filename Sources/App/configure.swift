@@ -39,7 +39,7 @@ public func configure(_ app: Application) async throws {
     app.migrations.add(CreateDumbledore())
 
     // MARK - Redis
-    app.redis.configuration = try RedisConfiguration(hostname: "localhost")
+    app.redis.configuration = try RedisConfiguration(hostname: Environment.get("REDIS_HOST") ?? "localhost")
 
     // MARK - Templating
     app.views.use(.leaf)
