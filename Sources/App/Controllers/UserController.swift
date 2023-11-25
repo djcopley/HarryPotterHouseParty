@@ -43,32 +43,35 @@ struct SettingsTemplate: Content {
 
 final class UserController: RouteCollection {
     func boot(routes: RoutesBuilder) throws {
-        routes.group("register") { register in
+        // Redirect authenticated users back to the index
+        let unauthenticated = routes.grouped(User.redirectAuthenticatedMiddleware(path: "/"))
+        
+        unauthenticated.group("register") { register in
             register.get(use: registerPage)
             register.post(use: createUser)
         }
 
-        routes.group("login") { login in
+        unauthenticated.group("login") { login in
             login.get(use: loginPage)
-            login.post(use: authenticateuser)
+            login.post(use: performLogin)
         }
 
-        routes.group("logout") { logout in
-            logout.post(use: logoutPage)
-        }
+        // Redirect unauthenticated users to the login page
+        let authenticated = routes.grouped(User.redirectMiddleware(path: "/login"))
 
-        routes.group("settings") { settings in
+        authenticated.group("settings") { settings in
             settings.get(use: settingsPage)
+        }
+        
+        routes.group("logout") { logout in
+            logout.post(use: performLogout)
         }
     }
 
     // MARK - Register
-    func registerPage(req: Request) async throws -> Response {
-        guard !req.auth.has(User.self) else {
-            return req.redirect(to: "/")
-        }
+    func registerPage(req: Request) async throws -> View {
         let context = RegisterTemplate(user: nil)
-        return try await req.view.render("register", context).encodeResponse(for: req)
+        return try await req.view.render("register", context)
     }
 
     func createUser(req: Request) async throws -> Response {
@@ -85,15 +88,12 @@ final class UserController: RouteCollection {
 
     // MARK - Login
 
-    func loginPage(req: Request) async throws -> Response {
-        if req.auth.has(User.self) {
-            return req.redirect(to: "/")
-        }
+    func loginPage(req: Request) async throws -> View {
         let indexRequest = try? req.query.decode(LoginQueryParams.self)
-        return try await req.view.render("login", indexRequest).encodeResponse(for: req)
+        return try await req.view.render("login", indexRequest)
     }
 
-    func authenticateuser(req: Request) async throws -> Response {
+    func performLogin(req: Request) async throws -> Response {
         let credentials = try req.content.decode(UserLoginRequest.self)
         guard let user = try await User.find(username: credentials.username, on: req.db) else {
             return req.redirect(to: "/login?failed=true")
@@ -107,20 +107,20 @@ final class UserController: RouteCollection {
         return req.redirect(to: "/")
     }
 
-    // MARK - Logout
-
-    func logoutPage(req: Request) async throws -> Response {
-        req.auth.logout(User.self)
-        return req.redirect(to: "/")
-    }
-
     // MARK - User Settings
 
     func settingsPage(req: Request) async throws -> Response {
         guard let username = req.auth.get(User.self)?.username, let user = try await User.find(username: username, on: req.db) else {
-            return req.redirect(to: "/login")
+            throw Abort(.internalServerError)
         }
         let context = SettingsTemplate(user: .init(username: user.username))
         return try await req.view.render("settings", context).encodeResponse(for: req)
+    }
+    
+    // MARK - Logout
+
+    func performLogout(req: Request) async throws -> Response {
+        req.auth.logout(User.self)
+        return req.redirect(to: "/")
     }
 }
