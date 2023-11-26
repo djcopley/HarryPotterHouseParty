@@ -2,7 +2,7 @@ import Vapor
 
 struct EnsureUserRolesMiddleware: AsyncMiddleware {
     private let roles: [User.Role]
-    
+
     init(roles: [User.Role]) {
         self.roles = roles
     }

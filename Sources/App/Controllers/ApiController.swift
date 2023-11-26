@@ -1,9 +1,14 @@
 import Fluent
 import Vapor
 
+private struct UpdateHouseScoreRequest: Content {
+    var score: Int
+}
+
 struct ApiController: RouteCollection {
     func boot(routes: RoutesBuilder) throws {
-        let api = routes
+        let api =
+            routes
             .grouped(APIKeyAuthenticator())
             .grouped(User.guardMiddleware())
             .grouped("api")
@@ -37,14 +42,9 @@ struct ApiController: RouteCollection {
         guard let house = try await House.find(name: houseName, on: req.db) else {
             throw Abort(.notFound)
         }
-        let patchScore = try req.content.decode(PatchHouse.self)
-        house.score = patchScore.score 
+        let patchScore = try req.content.decode(UpdateHouseScoreRequest.self)
+        house.score = patchScore.score
         try await house.update(on: req.db)
         return house
     }
-}
-
-// Structure of PATCH /api/houses/:name request.
-fileprivate struct PatchHouse: Content {
-    var score: Int
 }

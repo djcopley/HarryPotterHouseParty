@@ -1,58 +1,59 @@
 #extend("master"):
-    #export("body"):
-        <!-- Section: Design Block -->
-        <section class="text-center">
+#export("body"):
+<!-- Section: Design Block -->
+<section class="text-center">
 
-        <!-- Background image -->
-        <div class="p-5 bg-image" style="
+  <!-- Background image -->
+  <div class="p-5 bg-image" style="
             background-image: url('/images/hogwarts.jpeg');
             height: 300px;
             background-position: center 30%;
             background-repeat: no-repeat;
             background-size: cover;"></div>
 
-        <!-- Register Card -->
-        <div class="card rounded-4 mx-4 mx-md-5 shadow-5-strong frosted-glass">
-            <div class="card-body py-5 px-md-5">
+  <!-- Register Card -->
+  <div class="card rounded-4 mx-4 mx-md-5 shadow-5-strong frosted-glass">
+    <div class="card-body py-5 px-md-5">
 
-            <div class="row d-flex justify-content-center">
-                <div class="col-lg-8">
-                <h2 class="fw-bold mb-5"></h2>
-                <form method="post">
-                    <!-- Username input -->
-                    <div class="form-outline mb-4">
-                    <input autocomplete="username" type="text" id="username" name="username" class="form-control" />
-                    <label class="form-label" for="username">Username</label>
-                    </div>
-
-                    <!-- Password input -->
-                    <div class="form-outline mb-4">
-                    <input autocomplete="new-password" type="password" id="newPassword" name="newPassword" class="form-control" />
-                    <label class="form-label" for="newPassword">Enter Password</label>
-                    </div>
-
-                    <div class="form-outline mb-4">
-                    <input autocomplete="new-password" type="password" id="confirmPassword" name="confirmPassword" class="form-control" />
-                    <label class="form-label" for="confirmPassword">Confirm Password</label>
-                    </div>
-
-                    <!-- Submit button -->
-                    <button type="submit" class="btn btn-primary btn-block mb-4">
-                    Enroll
-                    </button>
-
-                    <!-- Register buttons -->
-                    <div class="text-center">
-                        <p>Already a wizard? <a href="/login">Log In</a></p>
-                    </div>
-                    </div>
-                </form>
-                </div>
+      <div class="row d-flex justify-content-center">
+        <div class="col-lg-8">
+          <h2 class="fw-bold mb-5"></h2>
+          <form method="post">
+            <!-- Username input -->
+            <div class="form-outline mb-4">
+              <input autocomplete="username" type="text" id="username" name="username" class="form-control" />
+              <label class="form-label" for="username">Username</label>
             </div>
+
+            <!-- Password input -->
+            <div class="form-outline mb-4">
+              <input autocomplete="new-password" type="password" id="newPassword" name="newPassword"
+                class="form-control" />
+              <label class="form-label" for="newPassword">Enter Password</label>
+            </div>
+
+            <div class="form-outline mb-4">
+              <input autocomplete="new-password" type="password" id="confirmPassword" name="confirmPassword"
+                class="form-control" />
+              <label class="form-label" for="confirmPassword">Confirm Password</label>
+            </div>
+
+            <!-- Submit button -->
+            <button type="submit" class="btn btn-primary btn-block mb-4">
+              Enroll
+            </button>
+
+            <!-- Register buttons -->
+            <div class="text-center">
+              <p>Already a wizard? <a href="/login">Log In</a></p>
             </div>
         </div>
-        </section>
-        <!-- Section: Design Block -->
-    #endexport
+        </form>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+<!-- Section: Design Block -->
+#endexport
 #endextend
-

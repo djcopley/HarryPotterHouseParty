@@ -36,11 +36,11 @@ struct HouseController: RouteCollection {
     }
 }
 
-fileprivate struct ScoreTemplateData: Codable {
+private struct ScoreTemplateData: Codable {
     let house: House
 }
 
 // Structure of PATCH /houses/:name request.
-fileprivate struct IncrementHouseScoreRequest: Content {
+private struct IncrementHouseScoreRequest: Content {
     var incrementBy: Int
 }

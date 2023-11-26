@@ -1,23 +1,23 @@
 #extend("master"):
-    #export("body"):
-        <div class="container-fluid main-content" hx-sse="connect:/house-events">
-            #for(house in houses):
-                <div class="house-quadrant">
-                    <img src="/images/#(house.name)-icon.png" alt="#capitalized(house.name)" class="house-image">
-                    <h2>#capitalized(house.name)</h2>
-                    <div hx-trigger="sse:scores_updated" hx-get="/house/#(house.name)">
-                        #extend("score")
-                    </div>
-                    #if(user):
-                        <p class="d-inline-flex gap-1">
-                            <button class="btn btn-primary score-button" hx-patch="/house/#(house.name)" hx-swap="none"
-                                    hx-vals='{"incrementBy": -1}'>-</button>
-                            <button class="btn btn-primary score-button" hx-patch="/house/#(house.name)" hx-swap="none"
-                                    hx-vals='{"incrementBy": 1}'>+</button>
-                        </p>
-                    #endif
-                </div>
-            #endfor
-        </div>
-    #endexport
+#export("body"):
+<div class="container-fluid main-content" hx-sse="connect:/house-events">
+  #for(house in houses):
+  <div class="house-quadrant">
+    <img src="/images/#(house.name)-icon.png" alt="#capitalized(house.name)" class="house-image">
+    <h2>#capitalized(house.name)</h2>
+    <div hx-trigger="sse:scores_updated" hx-get="/house/#(house.name)">
+      #extend("score")
+    </div>
+    #if(user):
+    <p class="d-inline-flex gap-1">
+      <button class="btn btn-primary score-button" hx-patch="/house/#(house.name)" hx-swap="none"
+        hx-vals='{"incrementBy": -1}'>-</button>
+      <button class="btn btn-primary score-button" hx-patch="/house/#(house.name)" hx-swap="none"
+        hx-vals='{"incrementBy": 1}'>+</button>
+    </p>
+    #endif
+  </div>
+  #endfor
+</div>
+#endexport
 #endextend

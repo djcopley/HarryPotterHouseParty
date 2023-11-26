@@ -8,7 +8,7 @@ struct CreateHousesSchema: AsyncMigration {
             .field("score", .int, .required)
             .unique(on: "name", name: "no_duplicate_houses")
             .create()
-        }
+    }
 
     func revert(on database: Database) async throws {
         try await database.schema("houses").delete()

@@ -25,11 +25,11 @@ final class User: Model, Content {
     @Enum(key: "role")
     var role: Role
 
-    init() { }
+    init() {}
 
     init(id: UUID? = nil, username: String, passwordHash: String, houseID: House.IDValue, role: Role = .student) {
         self.id = id
-        self.username = username 
+        self.username = username
         self.passwordHash = passwordHash
         self.$house.id = houseID
         self.role = role
@@ -59,7 +59,7 @@ extension User {
     }
 }
 
-extension User: ModelSessionAuthenticatable { }
+extension User: ModelSessionAuthenticatable {}
 
 extension User: ModelCredentialsAuthenticatable {
     static let usernameKey = \User.$username

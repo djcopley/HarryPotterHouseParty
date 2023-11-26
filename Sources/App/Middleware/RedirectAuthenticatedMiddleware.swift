@@ -1,10 +1,8 @@
 import Vapor
 
-final class RedirectAuthenticatedMiddleware<A>: Middleware
-    where A: Authenticatable
-{
+final class RedirectAuthenticatedMiddleware<A>: Middleware where A: Authenticatable {
     let makePath: @Sendable (Request) -> String
-    
+
     @preconcurrency init(_ authenticatableType: A.Type = A.self, makePath: @Sendable @escaping (Request) -> String) {
         self.makePath = makePath
     }

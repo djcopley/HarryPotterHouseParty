@@ -9,7 +9,8 @@ struct ScoresTemplate: Content {
 func routes(_ app: Application) throws {
     app.get { req async throws -> View in
         let houseOrder = ["gryffindor", "hufflepuff", "ravenclaw", "slytherin"]
-        let houses = try await House
+        let houses =
+            try await House
             .query(on: req.db)
             .all()
             .sorted { houseOrder.firstIndex(of: $0.name)! < houseOrder.firstIndex(of: $1.name)! }

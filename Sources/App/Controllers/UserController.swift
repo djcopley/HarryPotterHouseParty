@@ -45,7 +45,7 @@ final class UserController: RouteCollection {
     func boot(routes: RoutesBuilder) throws {
         // Redirect authenticated users back to the index
         let unauthenticated = routes.grouped(User.redirectAuthenticatedMiddleware(path: "/"))
-        
+
         unauthenticated.group("register") { register in
             register.get(use: registerPage)
             register.post(use: createUser)
@@ -62,7 +62,7 @@ final class UserController: RouteCollection {
         authenticated.group("settings") { settings in
             settings.get(use: settingsPage)
         }
-        
+
         routes.group("logout") { logout in
             logout.post(use: performLogout)
         }
@@ -80,7 +80,8 @@ final class UserController: RouteCollection {
         guard newUserInfo.newPassword == newUserInfo.confirmPassword else {
             throw Abort(.badRequest)
         }
-        let user = User(username: newUserInfo.username, passwordHash: try Bcrypt.hash(newUserInfo.newPassword), houseID: house.id!)
+        let user = User(
+            username: newUserInfo.username, passwordHash: try Bcrypt.hash(newUserInfo.newPassword), houseID: house.id!)
         try await user.create(on: req.db)
         req.auth.login(user)
         return req.redirect(to: "/")
@@ -110,13 +111,15 @@ final class UserController: RouteCollection {
     // MARK - User Settings
 
     func settingsPage(req: Request) async throws -> Response {
-        guard let username = req.auth.get(User.self)?.username, let user = try await User.find(username: username, on: req.db) else {
+        guard let username = req.auth.get(User.self)?.username,
+            let user = try await User.find(username: username, on: req.db)
+        else {
             throw Abort(.internalServerError)
         }
         let context = SettingsTemplate(user: .init(username: user.username))
         return try await req.view.render("settings", context).encodeResponse(for: req)
     }
-    
+
     // MARK - Logout
 
     func performLogout(req: Request) async throws -> Response {

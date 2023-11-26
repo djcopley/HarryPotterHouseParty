@@ -1,62 +1,62 @@
 #extend("master"):
-    #export("body"):
-        <!-- Section: Design Block -->
-        <section class="text-center">
+#export("body"):
+<!-- Section: Design Block -->
+<section class="text-center">
 
-        <!-- Background image -->
-        <div class="p-5 bg-image" style="
+  <!-- Background image -->
+  <div class="p-5 bg-image" style="
             background-image: url('/images/hogwarts.jpeg');
             height: 300px;
             background-position: center 30%;
             background-repeat: no-repeat;
             background-size: cover;"></div>
 
-        <!-- Login Card -->
-        <div class="card mx-4 mx-md-5 shadow-5-strong frosted-glass">
-            <div class="card-body py-5 px-md-5">
+  <!-- Login Card -->
+  <div class="card mx-4 mx-md-5 shadow-5-strong frosted-glass">
+    <div class="card-body py-5 px-md-5">
 
-            <div class="row d-flex justify-content-center">
-                <div class="col-lg-8">
-                <h2 class="fw-bold mb-5">Log In</h2>
-                <form method="post">
-                    <!-- Username input -->
-                    <div class="form-outline mb-4">
-                    <input autocomplete="username" type="text" id="username" name="username" class="form-control
+      <div class="row d-flex justify-content-center">
+        <div class="col-lg-8">
+          <h2 class="fw-bold mb-5">Log In</h2>
+          <form method="post">
+            <!-- Username input -->
+            <div class="form-outline mb-4">
+              <input autocomplete="username" type="text" id="username" name="username" class="form-control
                     #if(failed):is-invalid#endif
                     " />
-                    <label class="form-label" for="username">Username</label>
-                    </div>
-
-                    <!-- Password input -->
-                    <div class="form-outline mb-4">
-                    <input autocomplete="current-password" type="password" id="password" name="password" class="form-control
-                    #if(failed):is-invalid#endif
-                    " />
-                    <label class="form-label" for="password">Password</label>
-                    </div>
-
-                    #if(failed):
-                    <div class="text-center">
-                        <p class="text-danger">Incorrect username or password. Try again.</p>
-                    </div>
-                    #endif
-
-                    <!-- Submit button -->
-                    <button type="submit" class="btn btn-primary btn-block mb-4">
-                    Log In
-                    </button>
-
-                    <!-- Register buttons -->
-                    <div class="text-center">
-                        <p>Not a wizard? <a href="/register">Enroll</a></p>
-                    </div>
-                    </div>
-                </form>
-                </div>
+              <label class="form-label" for="username">Username</label>
             </div>
+
+            <!-- Password input -->
+            <div class="form-outline mb-4">
+              <input autocomplete="current-password" type="password" id="password" name="password" class="form-control
+                    #if(failed):is-invalid#endif
+                    " />
+              <label class="form-label" for="password">Password</label>
+            </div>
+
+            #if(failed):
+            <div class="text-center">
+              <p class="text-danger">Incorrect username or password. Try again.</p>
+            </div>
+            #endif
+
+            <!-- Submit button -->
+            <button type="submit" class="btn btn-primary btn-block mb-4">
+              Log In
+            </button>
+
+            <!-- Register buttons -->
+            <div class="text-center">
+              <p>Not a wizard? <a href="/register">Enroll</a></p>
             </div>
         </div>
-        </section>
-        <!-- Section: Design Block -->
-    #endexport
+        </form>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+<!-- Section: Design Block -->
+#endexport
 #endextend

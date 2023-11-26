@@ -16,11 +16,11 @@ final class House: Model, Content {
     @Children(for: \.$house)
     var users: [User]
 
-    init() { }
+    init() {}
 
     init(id: UUID? = nil, name: String, score: Int = 0) {
         self.id = id
-        self.name = name 
+        self.name = name
         self.score = score
     }
 }
