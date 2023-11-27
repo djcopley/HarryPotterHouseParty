@@ -1,0 +1,28 @@
+#extend("master"):
+#export("body"):
+<div class="container mt-5">
+  <h2 class="mb-4">List of Enrolled Users</h2>
+  <table class="table table-hover">
+      <thead class="thead-dark">
+          <tr>
+              <th scope="col">#</th>
+              <th scope="col">Username</th>
+              <th scope="col">Role</th>
+              <th scope="col">Status</th>
+          </tr>
+      </thead>
+      <tbody>
+        <!-- User Rows -->
+        #for(userIndex, user in users):
+          <tr>
+              <th scope="row">#(userIndex + 1)</th>
+              <td>#(user.username)</td>
+              <td>#(user.role)</td>
+              <td>Active</td>
+          </tr>
+        #endfor
+      </tbody>
+  </table>
+</div>
+#endexport
+#endextend

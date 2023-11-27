@@ -37,19 +37,19 @@ final class User: Model, Content {
 
     /// Enum describing the user permissions within the system.
     enum Role: String, Codable {
-        /// Users with this role have complete access to all houses.
-        case headmaster
-
-        /// Users with this role have permission to alter the score of their own house and approve
-        /// student score request changes.
-        case headOfHouse
+        /// Users with this role have permission to submit a score change request to be reviewed and
+        /// approved by the `Head of House` or `Headmaster`.
+        case student
 
         /// Users with this role have permission to alter their own house score.
         case prefect
 
-        /// Users with this role have permission to submit a score change request to be reviewed and
-        /// approved by the `Head of House` or `Headmaster`.
-        case student
+        /// Users with this role have permission to alter the score of all house and approve
+        /// student score request changes.
+        case headOfHouse
+
+        /// Users with this role have complete access to all houses.
+        case headmaster
     }
 }
 
@@ -73,10 +73,21 @@ extension User: ModelCredentialsAuthenticatable {
 extension User.Role {
     var displayName: String {
         switch self {
-        case .headmaster: "Headmaster"
-        case .headOfHouse: "Head of House"
-        case .prefect: "Prefect"
         case .student: "Student"
+        case .prefect: "Prefect"
+        case .headOfHouse: "Head of House"
+        case .headmaster: "Headmaster"
+        }
+    }
+}
+
+extension User.Role {
+    var privilege: Int {
+        switch self {
+        case .student: 10
+        case .prefect: 20
+        case .headOfHouse: 30
+        case .headmaster: 40
         }
     }
 }
